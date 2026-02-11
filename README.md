@@ -143,7 +143,7 @@ flowchart TD
     E --> F[Get Member DOB & Gender]
     F --> G[Calculate Age at Assessment]
     G --> H{Test Values Provided?}
-    H -->|Yes| I[Lookup Scores from physicals_scoring_lookup]
+    H -->|Yes| I[Lookup Scores from physicals_scoring_lookup<br/>Scores Already Computed 0-10]
     H -->|No| J[Skip Score Calculation]
     I --> K[Store All Values & Scores]
     J --> K
@@ -153,6 +153,27 @@ flowchart TD
     style A fill:#e1f5ff
     style M fill:#c8e6c9
     style I fill:#fff9c4
+```
+
+## Test Result Fallback Logic
+
+```mermaid
+flowchart TD
+    A[Quarterly Report Requested] --> B[Get Most Recent Assessment<br/>in Current Cycle]
+    B --> C{Test Result<br/>Exists?}
+    C -->|Yes| D[Use Current Cycle Result]
+    C -->|No| E[Search Previous Cycles<br/>for Same Test Type]
+    E --> F{Found Previous<br/>Result?}
+    F -->|Yes| G[Use Most Recent<br/>Previous Result]
+    F -->|No| H[Show NULL]
+    D --> I[Display in Report]
+    G --> I
+    H --> I
+    
+    style A fill:#e1f5ff
+    style D fill:#c8e6c9
+    style G fill:#fff9c4
+    style H fill:#ffebee
 ```
 
 ## Quarterly Reporting Flow
@@ -166,7 +187,8 @@ flowchart LR
     subgraph Processing["🔄 Processing"]
         Filter[Filter by quarter_cycle_id]
         Latest[Get Most Recent<br/>per member/cycle]
-        Aggregate[Calculate Averages]
+        Fallback[Fallback to Previous<br/>Cycle Results]
+        AvgScore[Average Test Scores<br/>Already Computed]
     end
     
     subgraph Views["👁️ Reporting Views"]
@@ -181,9 +203,10 @@ flowchart LR
     
     Raw --> Filter
     Filter --> Latest
-    Latest --> Aggregate
-    Aggregate --> Summary
-    Aggregate --> Due
+    Latest --> Fallback
+    Fallback --> AvgScore
+    AvgScore --> Summary
+    AvgScore --> Due
     Latest --> Rollup
     Latest --> Status
     
@@ -191,6 +214,7 @@ flowchart LR
     style Processing fill:#fff3e0
     style Views fill:#e8f5e9
     style Functions fill:#f3e5f5
+    style Fallback fill:#ffebee
 ```
 
 ## Yearly Cycle Generation
@@ -239,8 +263,10 @@ flowchart TD
 
 - ✅ **Automatic Quarter Assignment**: Assessments automatically assigned to closest quarterly cycle
 - ✅ **Smart Defaults**: Submission date defaults to last assessment if not provided
-- ✅ **Auto-Scoring**: All test scores calculated automatically from lookup tables
+- ✅ **Auto-Scoring**: All test scores calculated automatically from lookup tables (scores already computed, not recalculated)
 - ✅ **Most Recent Only**: Reporting uses most recent assessment per member per quarter
+- ✅ **Fallback Logic**: If a test is missing in current cycle, automatically uses most recent result for that test type from any previous cycle
+- ✅ **Average Calculation**: Averages the already-computed test scores (0-10) to get overall performance score
 - ✅ **Yearly Automation**: Cycles auto-generated for following year via cron job
 - ✅ **Monday Adjustment**: Cycle dates automatically adjusted to closest Monday
 
@@ -262,6 +288,20 @@ flowchart TD
 | `get_quarterly_rollup()` | Get detailed rollup for member/quarter |
 | `get_cycle_completion_status()` | Get completion statistics for a cycle |
 
+## Important Notes
+
+### Score Calculation
+- **Individual test scores are already computed** by the trigger when assessments are created
+- Scores are looked up from `physicals_scoring_lookup` based on test type, gender, age group, and raw value
+- The "average score" in reports is simply the average of these already-computed scores (0-10 scale)
+- No recalculation happens in the view - it just averages the pre-computed scores
+
+### Fallback Behavior
+- If a member doesn't have a test result in the current cycle, the system automatically looks back to find the most recent result for that specific test type
+- Fallback searches all previous cycles (before the current cycle date)
+- Each test type (grip strength, push ups, VO2, etc.) falls back independently
+- This ensures quarterly reports show complete data even when not all tests were performed in that cycle
+
 ## Usage
 
 ### Create Assessment
@@ -275,6 +315,7 @@ VALUES (...);
 ```sql
 SELECT * FROM view_physicals_quarterly_summary 
 WHERE cycle_year = 2026 AND quarter_number = 1;
+-- Missing tests automatically fall back to previous cycle results
 ```
 
 ### Get Members Due
