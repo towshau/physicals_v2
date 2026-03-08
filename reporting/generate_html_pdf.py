@@ -124,6 +124,7 @@ async def html_to_pdf(html: str, output_path: str) -> None:
             path=output_path,
             print_background=True,
             format="A4",
+            landscape=True,
         )
         await browser.close()
 
