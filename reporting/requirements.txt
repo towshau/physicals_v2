@@ -1,0 +1,3 @@
+reportlab
+Jinja2
+playwright
