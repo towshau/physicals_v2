@@ -43,8 +43,8 @@ html, body {
   background: var(--black);
   color: var(--white);
   font-family: var(--font-body);
-  font-size: 10pt;
-  line-height: 1.55;
+  font-size: 13pt;
+  line-height: 1.5;
   -webkit-print-color-adjust: exact;
   print-color-adjust: exact;
 }
@@ -64,32 +64,32 @@ html, body {
   position: absolute; bottom: 8mm; left: 20mm; right: 20mm;
   display: flex; justify-content: space-between; align-items: center;
 }
-.page-footer .logo-sm { height: 14px; width: auto; object-fit: contain; opacity: .5; }
+.page-footer .logo-sm { height: 16px; width: auto; object-fit: contain; opacity: .5; }
 .page-footer .page-num {
-  font-family: var(--font-data); font-size: .55rem; color: var(--text-tertiary);
+  font-family: var(--font-data); font-size: .7rem; color: var(--text-tertiary);
 }
 
 /* ===== LOGO ===== */
 .logo { display: block; object-fit: contain; }
-.logo-header { height: 22px; width: auto; margin-bottom: 16px; }
+.logo-header { height: 28px; width: auto; margin-bottom: 14px; }
 
 /* ===== TYPOGRAPHY ===== */
 h1 {
-  font-family: var(--font-heading); font-size: 2.2rem; font-weight: 700;
+  font-family: var(--font-heading); font-size: 2.4rem; font-weight: 700;
   color: var(--white); line-height: 1.15;
 }
 h1 em { font-style: italic; }
 h2 {
-  font-family: var(--font-heading); font-size: 1.25rem; font-weight: 700;
-  color: var(--white); margin-bottom: .5rem;
+  font-family: var(--font-heading); font-size: 1.5rem; font-weight: 700;
+  color: var(--white); margin-bottom: .4rem;
 }
 h3 {
-  font-family: var(--font-heading); font-size: .95rem; font-weight: 600;
-  color: var(--white); margin-bottom: .35rem;
+  font-family: var(--font-heading); font-size: 1.1rem; font-weight: 600;
+  color: var(--white); margin-bottom: .3rem;
 }
 .subtitle {
-  font-family: var(--font-body); color: var(--text-secondary); font-size: .75rem;
-  line-height: 1.55; margin-top: .2rem;
+  font-family: var(--font-body); color: var(--text-secondary); font-size: .85rem;
+  line-height: 1.5; margin-top: .2rem;
 }
 .data-text { font-family: var(--font-data); }
 .divider {
@@ -100,25 +100,25 @@ h3 {
 
 /* ===== SCORE CARD ===== */
 .score-card {
-  background: var(--card); border-radius: var(--radius); padding: 16px 12px;
+  background: var(--card); border-radius: var(--radius); padding: 18px 14px;
   text-align: center; display: flex; flex-direction: column;
   align-items: center; justify-content: center;
 }
 .score-card .label {
-  font-family: var(--font-data); font-size: .7rem; font-weight: 600;
+  font-family: var(--font-data); font-size: .85rem; font-weight: 600;
   color: var(--white); margin-bottom: 4px; letter-spacing: .02em;
 }
 .score-card .score {
-  font-family: var(--font-data); font-size: 1.65rem; font-weight: 700; color: var(--white);
+  font-family: var(--font-data); font-size: 2rem; font-weight: 700; color: var(--white);
 }
 .score-card .score span {
-  font-size: .85rem; font-weight: 400; color: var(--text-secondary);
+  font-size: 1rem; font-weight: 400; color: var(--text-secondary);
 }
 
 /* ===== BADGE ===== */
 .badge {
-  display: inline-block; padding: 3px 10px; border-radius: 999px;
-  font-family: var(--font-data); font-size: .55rem; font-weight: 600;
+  display: inline-block; padding: 4px 12px; border-radius: 999px;
+  font-family: var(--font-data); font-size: .7rem; font-weight: 600;
   margin-top: 6px;
 }
 .badge-1 { background: var(--s1bg); color: var(--s1); }
@@ -142,9 +142,9 @@ h3 {
 .cover-bottom {
   display: flex; align-items: center; gap: 14px; margin-top: 8px;
 }
-.cover-bottom .logo-cover { height: 18px; width: auto; object-fit: contain; }
+.cover-bottom .logo-cover { height: 22px; width: auto; object-fit: contain; }
 .cover-bottom .client-line {
-  font-family: var(--font-body); font-size: .8rem; color: var(--text-secondary);
+  font-family: var(--font-body); font-size: .95rem; color: var(--text-secondary);
 }
 
 /* ===== JOURNEY ===== */
@@ -154,11 +154,11 @@ h3 {
   display: flex; flex-direction: column;
 }
 .stage-card .stage-name {
-  font-family: var(--font-data); font-weight: 700; font-size: .75rem;
+  font-family: var(--font-data); font-weight: 700; font-size: .9rem;
   color: var(--white); margin-bottom: 4px;
 }
 .stage-card .stage-desc {
-  font-family: var(--font-body); font-size: .55rem; color: var(--text-secondary);
+  font-family: var(--font-body); font-size: .7rem; color: var(--text-secondary);
   line-height: 1.5; flex: 1;
 }
 .stage-card .stage-range { margin-top: 8px; }
@@ -169,7 +169,7 @@ h3 {
 }
 .stage-bar div {
   flex: 1; display: flex; align-items: center; justify-content: center;
-  font-family: var(--font-data); font-size: .5rem; font-weight: 700; color: #fff;
+  font-family: var(--font-data); font-size: .7rem; font-weight: 700; color: #fff;
 }
 .stage-bar .sb1 { background: var(--s1); }
 .stage-bar .sb2 { background: var(--s2); }
@@ -178,15 +178,15 @@ h3 {
 
 /* ===== RESULTS TABLE ===== */
 .results-meta {
-  font-family: var(--font-data); font-size: .6rem; color: var(--text-tertiary);
+  font-family: var(--font-data); font-size: .75rem; color: var(--text-tertiary);
   margin-bottom: 8px;
 }
 .results-table {
   width: 100%; border-collapse: collapse;
-  font-family: var(--font-data); font-size: .5rem;
+  font-family: var(--font-data); font-size: .7rem;
 }
 .results-table th, .results-table td {
-  padding: 3.5px 5px; border: 1px solid var(--divider-dark); vertical-align: middle;
+  padding: 6px 8px; border: 1px solid var(--divider-dark); vertical-align: middle;
 }
 .results-table thead th {
   background: #1a1a1a; color: var(--text-secondary); font-weight: 600; text-align: center;
@@ -194,13 +194,13 @@ h3 {
 .results-table .pillar-cell {
   background: var(--card); color: var(--s2); font-weight: 700;
   text-align: center; writing-mode: vertical-rl; text-orientation: mixed;
-  letter-spacing: .04em; font-size: .5rem; width: 18px;
+  letter-spacing: .04em; font-size: .7rem; width: 24px;
 }
 .results-table .test-name { color: var(--white); font-weight: 500; white-space: nowrap; }
-.results-table .result-cell { text-align: center; font-weight: 700; color: var(--white); font-size: .55rem; }
+.results-table .result-cell { text-align: center; font-weight: 700; color: var(--white); font-size: .75rem; }
 .results-table .stage-cell {
-  text-align: center; color: var(--text-tertiary); font-size: .42rem;
-  line-height: 1.35; white-space: pre-line;
+  text-align: center; color: var(--text-tertiary); font-size: .6rem;
+  line-height: 1.4; white-space: pre-line;
 }
 .results-table .stage-cell.active-1 { background: var(--s1bg); color: var(--s1); font-weight: 600; }
 .results-table .stage-cell.active-2 { background: var(--s2bg); color: var(--s2); font-weight: 600; }
@@ -213,27 +213,27 @@ h3 {
 
 /* ===== DETAIL SECTIONS ===== */
 .section { margin-top: 22px; }
-.detail-row { display: flex; align-items: flex-start; gap: 16px; }
-.detail-row .score-card { min-width: 120px; }
+.detail-row { display: flex; align-items: flex-start; gap: 18px; }
+.detail-row .score-card { min-width: 140px; align-self: flex-start; }
 .detail-body {
   font-family: var(--font-body); color: var(--text-secondary);
-  font-size: .72rem; line-height: 1.6; flex: 1;
+  font-size: .9rem; line-height: 1.55; flex: 1;
 }
-.detail-body p { margin-bottom: .4rem; }
+.detail-body p { margin-bottom: .5rem; }
 .detail-body strong { color: var(--white); }
 
 .biomarkers { list-style: none; margin-top: 8px; }
 .biomarkers li {
-  padding: 6px 10px; background: var(--card); border-radius: var(--radius);
-  margin-bottom: 4px; font-family: var(--font-data); font-size: .65rem; color: var(--white);
+  padding: 8px 12px; background: var(--card); border-radius: var(--radius);
+  margin-bottom: 5px; font-family: var(--font-data); font-size: .8rem; color: var(--white);
 }
 .biomarkers li span { color: var(--text-tertiary); margin-right: 6px; }
 
 /* VO2 scale */
-.vo2-scale { display: flex; border-radius: var(--radius); overflow: hidden; margin-top: 10px; }
+.vo2-scale { display: flex; border-radius: var(--radius); overflow: hidden; margin-top: 12px; }
 .vo2-seg {
-  flex: 1; padding: 8px 4px; text-align: center;
-  font-family: var(--font-data); font-size: .5rem; font-weight: 600;
+  flex: 1; padding: 10px 6px; text-align: center;
+  font-family: var(--font-data); font-size: .7rem; font-weight: 600;
   color: rgba(255,255,255,.6);
 }
 .vo2-seg.seg1 { background: rgba(107,20,20,.3); }
@@ -241,26 +241,26 @@ h3 {
 .vo2-seg.seg3 { background: rgba(134,137,27,.3); }
 .vo2-seg.seg4 { background: rgba(54,106,96,.3); }
 .vo2-seg.highlighted { outline: 2px solid var(--s2); outline-offset: -2px; border-radius: 4px; }
-.vo2-seg .seg-label { display: block; font-size: .45rem; color: var(--text-tertiary); margin-top: 2px; }
+.vo2-seg .seg-label { display: block; font-size: .6rem; color: var(--text-tertiary); margin-top: 2px; }
 
 /* Strength equation */
 .str-equation {
-  display: flex; align-items: center; justify-content: center; gap: 10px;
-  margin: 14px 0; flex-wrap: wrap;
+  display: flex; align-items: center; justify-content: center; gap: 14px;
+  margin: 16px 0; flex-wrap: wrap;
 }
 .str-equation .op {
-  font-family: var(--font-data); font-size: 1.2rem; font-weight: 300; color: var(--text-tertiary);
+  font-family: var(--font-data); font-size: 1.5rem; font-weight: 300; color: var(--text-tertiary);
 }
-.str-equation .score-card { min-width: 100px; flex: 1; }
+.str-equation .score-card { min-width: 120px; flex: 1; }
 
 /* Bonus */
-.bonus-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 14px; }
+.bonus-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 16px; }
 
 /* Why grid */
-.why-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 14px; }
-.why-card { background: var(--card); border-radius: var(--radius); padding: 12px; }
-.why-card h3 { font-family: var(--font-data); font-size: .65rem; color: var(--s2); margin-bottom: 6px; }
-.why-card p { font-family: var(--font-body); font-size: .5rem; color: var(--text-secondary); line-height: 1.55; margin-bottom: 3px; }
+.why-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 16px; }
+.why-card { background: var(--card); border-radius: var(--radius); padding: 14px; }
+.why-card h3 { font-family: var(--font-data); font-size: .8rem; color: var(--s2); margin-bottom: 6px; }
+.why-card p { font-family: var(--font-body); font-size: .7rem; color: var(--text-secondary); line-height: 1.55; margin-bottom: 4px; }
 .why-card strong { color: var(--white); }
 
 /* Congrats */
@@ -268,10 +268,10 @@ h3 {
   display: flex; flex-direction: column; justify-content: center;
   align-items: center; text-align: center;
 }
-.congrats h1 { font-size: 2rem; max-width: 80%; margin-bottom: 16px; }
+.congrats h1 { font-size: 2.2rem; max-width: 80%; margin-bottom: 16px; }
 .congrats p {
   font-family: var(--font-body); color: var(--text-secondary);
-  font-size: .8rem; max-width: 72%; line-height: 1.7; margin-bottom: 8px;
+  font-size: .95rem; max-width: 72%; line-height: 1.65; margin-bottom: 8px;
 }
 
 /* Back cover */
