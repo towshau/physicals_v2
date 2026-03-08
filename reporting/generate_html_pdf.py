@@ -118,13 +118,17 @@ def render_html(data: dict) -> str:
 async def html_to_pdf(html: str, output_path: str) -> None:
     async with async_playwright() as p:
         browser = await p.chromium.launch()
-        page = await browser.new_page()
+        page = await browser.new_page(
+            viewport={"width": 1123, "height": 794},
+            device_scale_factor=2,
+        )
         await page.set_content(html, wait_until="networkidle")
         await page.pdf(
             path=output_path,
             print_background=True,
             format="A4",
             landscape=True,
+            prefer_css_page_size=True,
         )
         await browser.close()
 
