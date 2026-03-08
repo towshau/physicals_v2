@@ -2,28 +2,36 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>{{ name }} — Lockeroom Physical Report</title>
+<title>{{ name }} – Physical Report</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Inter:wght@400;500;600;700&family=Georgia&display=swap" rel="stylesheet">
 <style>
+/* ===== BRAND TOKENS ===== */
 :root {
-  --bg: #0d0d0d;
-  --surface: #161616;
-  --surface-2: #1e1e1e;
-  --border: #2a2a2a;
-  --accent: #cc6600;
-  --accent-light: #e07700;
-  --white: #ffffff;
-  --g100: #e5e5e5;
-  --g200: #b0b0b0;
-  --g300: #888;
-  --g400: #555;
-  --s1: #d94f4f;
-  --s2: #cc6600;
-  --s3: #7cb342;
-  --s4: #43a047;
-  --s1bg: rgba(217,79,79,.15);
-  --s2bg: rgba(204,102,0,.15);
-  --s3bg: rgba(124,179,66,.15);
-  --s4bg: rgba(67,160,71,.15);
+  --black: #000000;
+  --white: #FFFFFF;
+  --card: #262626;
+  --divider-dark: #333333;
+  --divider-light: #E0E0E0;
+  --text-secondary: #999999;
+  --text-tertiary: #666666;
+
+  --s1: #6B1414;
+  --s2: #9E631D;
+  --s3: #86891B;
+  --s4: #366A60;
+  --s1bg: rgba(107,20,20,.18);
+  --s2bg: rgba(158,99,29,.18);
+  --s3bg: rgba(134,137,27,.18);
+  --s4bg: rgba(54,106,96,.18);
+
+  --font-logo: 'Bebas Neue', Impact, sans-serif;
+  --font-heading: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  --font-body: Georgia, 'Times New Roman', serif;
+  --font-data: 'Inter', Roboto, Helvetica, Arial, sans-serif;
+
+  --radius: 6px;
 }
 
 @page { size: A4; margin: 0; }
@@ -31,212 +39,287 @@
 
 html, body {
   width: 210mm;
-  background: var(--bg);
-  color: var(--g100);
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  background: var(--black);
+  color: var(--white);
+  font-family: var(--font-body);
   font-size: 10pt;
-  line-height: 1.5;
+  line-height: 1.55;
   -webkit-print-color-adjust: exact;
   print-color-adjust: exact;
 }
 
-/* ---------- page shell ---------- */
+/* ===== PAGE SHELL ===== */
 .page {
-  width: 210mm; height: 297mm;
-  padding: 15mm 20mm;
-  background: var(--bg);
+  width: 210mm; min-height: 297mm;
+  padding: 18mm 22mm;
+  background: var(--black);
   position: relative;
-  overflow: hidden;
   page-break-after: always;
+  overflow: hidden;
 }
 .page:last-child { page-break-after: auto; }
 
-.page-num {
-  position: absolute; bottom: 8mm; left: 0; right: 0;
-  text-align: center; font-size: .65rem; color: var(--g400);
+.page-footer {
+  position: absolute; bottom: 10mm; left: 22mm; right: 22mm;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.page-footer .logo-sm { height: 14px; opacity: .5; }
+.page-footer .page-num {
+  font-family: var(--font-data); font-size: .55rem; color: var(--text-tertiary);
 }
 
-/* ---------- brand ---------- */
-.brand {
-  color: var(--accent); font-weight: 700;
-  font-size: .85rem; letter-spacing: .15em; text-transform: uppercase;
+/* ===== LOGO ===== */
+.logo { display: block; }
+.logo-header { height: 22px; margin-bottom: 18px; }
+
+/* ===== TYPOGRAPHY ===== */
+h1 {
+  font-family: var(--font-heading); font-size: 2.2rem; font-weight: 700;
+  color: var(--white); line-height: 1.15;
 }
-.brand-lg { font-size: 1.6rem; letter-spacing: .1em; }
+h1 em { font-style: italic; }
+h2 {
+  font-family: var(--font-heading); font-size: 1.25rem; font-weight: 700;
+  color: var(--white); margin-bottom: .5rem;
+}
+h3 {
+  font-family: var(--font-heading); font-size: .95rem; font-weight: 600;
+  color: var(--white); margin-bottom: .35rem;
+}
+.subtitle {
+  font-family: var(--font-body); color: var(--text-secondary); font-size: .75rem;
+  line-height: 1.55; margin-top: .2rem;
+}
+.data-text { font-family: var(--font-data); }
+.divider {
+  border: none; border-top: 1px solid var(--divider-dark);
+  margin: 14px 0;
+}
+.divider-light { border-top-color: var(--divider-light); }
 
-/* ---------- headings ---------- */
-h1 { font-size: 2rem; font-weight: 700; color: var(--white); line-height: 1.2; }
-h2 { font-size: 1.4rem; font-weight: 700; color: var(--white); margin-bottom: .6rem; }
-h3 { font-size: 1rem; font-weight: 600; color: var(--white); margin-bottom: .4rem; }
-.subtitle { color: var(--g200); font-size: .8rem; margin-top: .3rem; }
-
-/* ---------- score card ---------- */
+/* ===== SCORE CARD ===== */
 .score-card {
-  background: var(--surface); border: 1px solid var(--border);
-  border-radius: 14px; padding: 1.2rem; text-align: center;
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  background: var(--card); border-radius: var(--radius); padding: 16px 12px;
+  text-align: center; display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
 }
-.score-card .label { font-size: .85rem; font-weight: 600; color: var(--white); margin-bottom: .35rem; }
-.score-card .score { font-size: 1.8rem; font-weight: 700; color: var(--white); }
-.score-card .score span { font-size: 1rem; font-weight: 400; color: var(--g300); }
+.score-card .label {
+  font-family: var(--font-data); font-size: .7rem; font-weight: 600;
+  color: var(--white); margin-bottom: 4px; letter-spacing: .02em;
+}
+.score-card .score {
+  font-family: var(--font-data); font-size: 1.65rem; font-weight: 700; color: var(--white);
+}
+.score-card .score span {
+  font-size: .85rem; font-weight: 400; color: var(--text-secondary);
+}
 
-/* ---------- stage badge ---------- */
+/* ===== BADGE ===== */
 .badge {
-  display: inline-block; padding: .2rem .7rem; border-radius: 999px;
-  font-size: .65rem; font-weight: 600; margin-top: .35rem;
+  display: inline-block; padding: 3px 10px; border-radius: 999px;
+  font-family: var(--font-data); font-size: .55rem; font-weight: 600;
+  margin-top: 6px;
 }
 .badge-1 { background: var(--s1bg); color: var(--s1); }
 .badge-2 { background: var(--s2bg); color: var(--s2); }
 .badge-3 { background: var(--s3bg); color: var(--s3); }
 .badge-4 { background: var(--s4bg); color: var(--s4); }
 
-/* ---------- info grid ---------- */
-.info-grid {
-  display: grid; grid-template-columns: 1fr 1fr;
-  gap: .4rem 2rem; font-size: .8rem; color: var(--g200);
+/* ===== COVER ===== */
+.cover { padding: 0; display: flex; flex-direction: column; }
+.cover-hero {
+  width: 100%; height: 50%; object-fit: cover; display: block;
 }
-.info-grid dt { color: var(--g300); }
-.info-grid dd { color: var(--white); font-weight: 500; }
+.cover-body { padding: 24px 22mm; flex: 1; display: flex; flex-direction: column; }
+.cover-body h1 { font-size: 2.6rem; margin-top: 12px; }
+.cover-body .member-title {
+  font-family: var(--font-heading); font-size: 1.05rem; font-weight: 400;
+  color: var(--text-secondary); margin-top: 8px;
+}
+.cover-body .info-grid {
+  display: grid; grid-template-columns: auto 1fr; gap: 4px 20px;
+  margin-top: auto; font-size: .75rem;
+}
+.cover-body .info-grid dt {
+  font-family: var(--font-data); color: var(--text-tertiary); font-weight: 500;
+}
+.cover-body .info-grid dd {
+  font-family: var(--font-data); color: var(--white); font-weight: 600;
+}
 
-/* ---------- page 1  cover ---------- */
-.cover { display: flex; flex-direction: column; justify-content: center; padding: 20mm 24mm; }
-.cover .tagline { color: var(--g200); font-size: .9rem; margin-top: .8rem; max-width: 70%; line-height: 1.6; }
-.cover h1 { font-size: 2.8rem; }
-.cover h1 em { font-style: normal; color: var(--accent); }
-.cover .client-block { margin-top: auto; }
-
-/* ---------- page 2  journey ---------- */
-.stages-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-top: 1.2rem; }
+/* ===== JOURNEY ===== */
+.stages-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 14px; }
 .stage-card {
-  background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
-  padding: 1rem; display: flex; flex-direction: column;
+  background: var(--card); border-radius: var(--radius); padding: 12px;
+  display: flex; flex-direction: column;
 }
-.stage-card .stage-name { font-weight: 700; font-size: .9rem; color: var(--white); margin-bottom: .3rem; }
-.stage-card .stage-desc { font-size: .62rem; color: var(--g200); line-height: 1.55; flex: 1; }
-.stage-card .stage-range { margin-top: .6rem; font-size: .7rem; font-weight: 600; }
+.stage-card .stage-name {
+  font-family: var(--font-data); font-weight: 700; font-size: .75rem;
+  color: var(--white); margin-bottom: 4px;
+}
+.stage-card .stage-desc {
+  font-family: var(--font-body); font-size: .55rem; color: var(--text-secondary);
+  line-height: 1.5; flex: 1;
+}
+.stage-card .stage-range { margin-top: 8px; }
 
-.stage-bar { display: flex; margin-top: 1.4rem; border-radius: 8px; overflow: hidden; height: 32px; }
+.stage-bar {
+  display: flex; margin-top: 14px; border-radius: var(--radius);
+  overflow: hidden; height: 26px;
+}
 .stage-bar div {
   flex: 1; display: flex; align-items: center; justify-content: center;
-  font-size: .6rem; font-weight: 700; color: #fff;
+  font-family: var(--font-data); font-size: .5rem; font-weight: 700; color: #fff;
 }
 .stage-bar .sb1 { background: var(--s1); }
 .stage-bar .sb2 { background: var(--s2); }
 .stage-bar .sb3 { background: var(--s3); }
 .stage-bar .sb4 { background: var(--s4); }
 
-/* ---------- page 3  results table ---------- */
-.results-meta { font-size: .7rem; color: var(--g300); margin-bottom: .6rem; }
-.results-table { width: 100%; border-collapse: collapse; font-size: .55rem; }
+/* ===== RESULTS TABLE ===== */
+.results-meta {
+  font-family: var(--font-data); font-size: .6rem; color: var(--text-tertiary);
+  margin-bottom: 8px;
+}
+.results-table {
+  width: 100%; border-collapse: collapse;
+  font-family: var(--font-data); font-size: .5rem;
+}
 .results-table th, .results-table td {
-  padding: 4px 5px; border: 1px solid var(--border); vertical-align: middle;
+  padding: 3.5px 5px; border: 1px solid var(--divider-dark); vertical-align: middle;
 }
 .results-table thead th {
-  background: var(--surface-2); color: var(--g200); font-weight: 600; text-align: center;
+  background: #1a1a1a; color: var(--text-secondary); font-weight: 600; text-align: center;
 }
 .results-table .pillar-cell {
-  background: var(--surface); color: var(--accent); font-weight: 700;
+  background: var(--card); color: var(--s2); font-weight: 700;
   text-align: center; writing-mode: vertical-rl; text-orientation: mixed;
-  letter-spacing: .05em; font-size: .6rem; width: 22px;
+  letter-spacing: .04em; font-size: .5rem; width: 18px;
 }
 .results-table .test-name { color: var(--white); font-weight: 500; white-space: nowrap; }
-.results-table .result-cell { text-align: center; font-weight: 700; color: var(--white); font-size: .65rem; }
-.results-table .stage-cell { text-align: center; color: var(--g300); font-size: .5rem; line-height: 1.4; white-space: pre-line; }
+.results-table .result-cell { text-align: center; font-weight: 700; color: var(--white); font-size: .55rem; }
+.results-table .stage-cell {
+  text-align: center; color: var(--text-tertiary); font-size: .42rem;
+  line-height: 1.35; white-space: pre-line;
+}
 .results-table .stage-cell.active-1 { background: var(--s1bg); color: var(--s1); font-weight: 600; }
 .results-table .stage-cell.active-2 { background: var(--s2bg); color: var(--s2); font-weight: 600; }
 .results-table .stage-cell.active-3 { background: var(--s3bg); color: var(--s3); font-weight: 600; }
 .results-table .stage-cell.active-4 { background: var(--s4bg); color: var(--s4); font-weight: 600; }
 
-/* ---------- page 4  summary cards ---------- */
-.summary-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.4rem; margin-top: 2rem; }
-.summary-cards .score-card { min-height: 160px; }
+/* ===== SUMMARY CARDS ===== */
+.summary-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 16px; }
+.summary-cards .score-card { min-height: 120px; }
 
-/* ---------- pages 5-8  detail pages ---------- */
-.detail-header { display: flex; align-items: flex-start; gap: 1.5rem; margin-bottom: 1.2rem; }
-.detail-header .score-card { min-width: 140px; }
-.detail-body { color: var(--g200); font-size: .8rem; line-height: 1.6; }
-.detail-body p { margin-bottom: .6rem; }
+/* ===== DETAIL SECTIONS ===== */
+.section { margin-top: 22px; }
+.detail-row { display: flex; align-items: flex-start; gap: 16px; }
+.detail-row .score-card { min-width: 120px; }
+.detail-body {
+  font-family: var(--font-body); color: var(--text-secondary);
+  font-size: .72rem; line-height: 1.6; flex: 1;
+}
+.detail-body p { margin-bottom: .4rem; }
+.detail-body strong { color: var(--white); }
 
-.biomarkers { list-style: none; margin-top: .8rem; }
+.biomarkers { list-style: none; margin-top: 8px; }
 .biomarkers li {
-  padding: .45rem .8rem; background: var(--surface); border: 1px solid var(--border);
-  border-radius: 8px; margin-bottom: .4rem; font-size: .75rem; color: var(--white);
+  padding: 6px 10px; background: var(--card); border-radius: var(--radius);
+  margin-bottom: 4px; font-family: var(--font-data); font-size: .65rem; color: var(--white);
 }
-.biomarkers li span { color: var(--g300); margin-right: .4rem; }
+.biomarkers li span { color: var(--text-tertiary); margin-right: 6px; }
 
-/* vo2 scale */
-.vo2-scale { display: flex; margin: 1.5rem 0; border-radius: 8px; overflow: hidden; position: relative; }
+/* VO2 scale */
+.vo2-scale { display: flex; border-radius: var(--radius); overflow: hidden; margin-top: 10px; }
 .vo2-seg {
-  flex: 1; padding: .6rem .3rem; text-align: center; font-size: .6rem; font-weight: 600; color: rgba(255,255,255,.7);
+  flex: 1; padding: 8px 4px; text-align: center;
+  font-family: var(--font-data); font-size: .5rem; font-weight: 600;
+  color: rgba(255,255,255,.6);
 }
-.vo2-seg.seg1 { background: rgba(217,79,79,.25); }
-.vo2-seg.seg2 { background: rgba(204,102,0,.3); }
-.vo2-seg.seg3 { background: rgba(124,179,66,.25); }
-.vo2-seg.seg4 { background: rgba(67,160,71,.25); }
-.vo2-seg.highlighted { outline: 2px solid var(--accent); outline-offset: -2px; border-radius: 4px; }
-.vo2-seg .seg-label { display: block; font-size: .55rem; color: var(--g300); margin-top: 2px; }
-.vo2-marker {
-  position: absolute; top: -18px; font-size: .7rem; font-weight: 700; color: var(--accent);
-  transform: translateX(-50%);
+.vo2-seg.seg1 { background: rgba(107,20,20,.3); }
+.vo2-seg.seg2 { background: rgba(158,99,29,.3); }
+.vo2-seg.seg3 { background: rgba(134,137,27,.3); }
+.vo2-seg.seg4 { background: rgba(54,106,96,.3); }
+.vo2-seg.highlighted { outline: 2px solid var(--s2); outline-offset: -2px; border-radius: 4px; }
+.vo2-seg .seg-label { display: block; font-size: .45rem; color: var(--text-tertiary); margin-top: 2px; }
+
+/* Strength equation */
+.str-equation {
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  margin: 14px 0; flex-wrap: wrap;
 }
-
-/* strength equation */
-.str-equation { display: flex; align-items: center; justify-content: center; gap: .8rem; margin: 1.5rem 0; flex-wrap: wrap; }
-.str-equation .op { font-size: 1.4rem; font-weight: 300; color: var(--g400); }
-.str-equation .score-card { min-width: 110px; flex: 1; }
-
-/* ---------- page 8  bonus ---------- */
-.bonus-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 1.4rem; margin-top: 1.2rem; }
-
-/* ---------- page 9  why it matters ---------- */
-.why-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; margin-top: 1rem; }
-.why-card {
-  background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1rem;
+.str-equation .op {
+  font-family: var(--font-data); font-size: 1.2rem; font-weight: 300; color: var(--text-tertiary);
 }
-.why-card h3 { font-size: .8rem; color: var(--accent); margin-bottom: .5rem; }
-.why-card p { font-size: .6rem; color: var(--g200); line-height: 1.6; margin-bottom: .4rem; }
+.str-equation .score-card { min-width: 100px; flex: 1; }
+
+/* Bonus */
+.bonus-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 14px; }
+
+/* Why grid */
+.why-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 14px; }
+.why-card { background: var(--card); border-radius: var(--radius); padding: 12px; }
+.why-card h3 { font-family: var(--font-data); font-size: .65rem; color: var(--s2); margin-bottom: 6px; }
+.why-card p { font-family: var(--font-body); font-size: .5rem; color: var(--text-secondary); line-height: 1.55; margin-bottom: 3px; }
 .why-card strong { color: var(--white); }
 
-/* ---------- page 10  congrats ---------- */
-.congrats { display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
-.congrats h1 { font-size: 2.2rem; max-width: 80%; margin-bottom: 1.2rem; }
-.congrats p { color: var(--g200); font-size: .85rem; max-width: 75%; line-height: 1.7; margin-bottom: .6rem; }
+/* Congrats */
+.congrats {
+  display: flex; flex-direction: column; justify-content: center;
+  align-items: center; text-align: center;
+}
+.congrats h1 { font-size: 2rem; max-width: 80%; margin-bottom: 16px; }
+.congrats p {
+  font-family: var(--font-body); color: var(--text-secondary);
+  font-size: .8rem; max-width: 72%; line-height: 1.7; margin-bottom: 8px;
+}
 
-/* ---------- page 11  back cover ---------- */
-.back-cover { display: flex; flex-direction: column; justify-content: center; align-items: center; }
+/* Back cover */
+.back-cover {
+  display: flex; flex-direction: column; justify-content: center; align-items: center;
+}
 </style>
 </head>
 <body>
 
-<!-- ==================== PAGE 1  COVER ==================== -->
+<!-- ===== PAGE 1: COVER ===== -->
 <div class="page cover">
-  <div class="brand brand-lg">LOCKEROOM</div>
-  <div style="margin-top:auto; margin-bottom:auto;">
+  <img src="{{ hero_b64 }}" class="cover-hero" alt="">
+  <div class="cover-body">
+    <img src="{{ logo_b64 }}" class="logo" style="height:30px;" alt="Lockeroom">
     <h1>Your Lockeroom<br><em>Physical</em></h1>
-    <p class="tagline">We don't just train to sweat.<br>We train to stay capable, for life.</p>
-  </div>
-  <div class="client-block">
+    <p class="member-title">{{ name }} &mdash; Physical Report</p>
+    <p style="font-family:var(--font-data); font-size:.7rem; color:var(--text-tertiary); margin-top:4px;">{{ report_date }}</p>
+    <hr class="divider" style="margin-top:14px;">
     <dl class="info-grid">
       <dt>Name</dt><dd>{{ name }}</dd>
       <dt>DOB</dt><dd>{{ dob }}</dd>
       <dt>Assessor</dt><dd>{{ assessor }}</dd>
       <dt>Next Physical</dt><dd>{{ next_physical }}</dd>
-      <dt>Date Of Physical</dt><dd>{{ date }}</dd>
+      <dt>Date of Physical</dt><dd>{{ date }}</dd>
     </dl>
+    <p style="font-family:var(--font-body); font-style:italic; color:var(--text-secondary); font-size:.7rem; margin-top:16px; line-height:1.6;">
+      We don't just train to sweat.<br>We train to stay capable, for life.
+    </p>
   </div>
-  <div class="page-num">1 of {{ total_pages }}</div>
+  <div class="page-footer">
+    <img src="{{ logo_b64 }}" class="logo-sm" alt="">
+    <span class="page-num">1 / {{ total_pages }}</span>
+  </div>
 </div>
 
-<!-- ==================== PAGE 2  JOURNEY ==================== -->
+<!-- ===== PAGE 2: JOURNEY + PERFORMANCE SUMMARY ===== -->
 <div class="page">
-  <div class="brand">LOCKEROOM</div>
-  <h2 style="margin-top:.6rem;">Your Lockeroom Journey</h2>
+  <img src="{{ logo_b64 }}" class="logo logo-header" alt="Lockeroom">
+  <h2>Your Lockeroom <em>Journey</em></h2>
+  <p class="subtitle">Understanding where you sit across our four-stage progression system.</p>
 
-  <div class="stages-grid">
+  <div class="stages-row">
     {% for s in stages %}
     <div class="stage-card">
       <div class="stage-name">{{ s.name }}</div>
       <div class="stage-desc">{{ s.description }}</div>
-      <div class="stage-range badge badge-{{ s.num }}">Stage {{ s.num }} &middot; {{ s.range }}</div>
+      <div class="badge badge-{{ s.num }}">Stage {{ s.num }} &middot; {{ s.range }}</div>
     </div>
     {% endfor %}
   </div>
@@ -248,20 +331,47 @@ h3 { font-size: 1rem; font-weight: 600; color: var(--white); margin-bottom: .4re
     <div class="sb4">Stage 4</div>
   </div>
 
-  <div class="page-num">2 of {{ total_pages }}</div>
+  <hr class="divider" style="margin-top:20px;">
+
+  <h2>Your <em>Performance Summary</em></h2>
+  <p class="subtitle">Each score factors in your age and gender for accurate benchmarking.</p>
+
+  <div class="summary-cards">
+    <div class="score-card">
+      <div class="label">Health</div>
+      <div class="score">{{ health_score }} <span>/ 10</span></div>
+      <div class="badge badge-{{ health_stage }}">Stage {{ health_stage }}</div>
+    </div>
+    <div class="score-card">
+      <div class="label">Fitness</div>
+      <div class="score">{{ fitness_score }} <span>/ 10</span></div>
+      <div class="badge badge-{{ fitness_stage }}">Stage {{ fitness_stage }}</div>
+    </div>
+    <div class="score-card">
+      <div class="label">Strength</div>
+      <div class="score">{{ strength_score }} <span>/ 10</span></div>
+      <div class="badge badge-{{ strength_stage }}">Stage {{ strength_stage }}</div>
+    </div>
+  </div>
+  <p class="subtitle" style="margin-top:10px;">Your performance summary combines multiple tests in each category, with details on the following pages.</p>
+
+  <div class="page-footer">
+    <img src="{{ logo_b64 }}" class="logo-sm" alt="">
+    <span class="page-num">2 / {{ total_pages }}</span>
+  </div>
 </div>
 
-<!-- ==================== PAGE 3  PHYSICAL RESULTS ==================== -->
+<!-- ===== PAGE 3: PHYSICAL RESULTS TABLE ===== -->
 <div class="page">
-  <div class="brand">LOCKEROOM</div>
-  <h2 style="margin-top:.6rem;">Physical Results</h2>
+  <img src="{{ logo_b64 }}" class="logo logo-header" alt="Lockeroom">
+  <h2>Physical <em>Results</em></h2>
   <div class="results-meta">Date: {{ date }} &nbsp;&bull;&nbsp; RM: {{ assessor }} &nbsp;&bull;&nbsp; Category: {{ category }}</div>
-  <p class="subtitle" style="margin-bottom:.8rem;">Here are the combined results of all completed tests on the day. The rest of the report breaks these down for you.</p>
+  <p class="subtitle" style="margin-bottom:10px;">Here are the combined results of all completed tests on the day. The rest of the report breaks these down for you.</p>
 
   <table class="results-table">
     <thead>
       <tr>
-        <th style="width:22px;"></th>
+        <th style="width:18px;"></th>
         <th style="text-align:left;">Test</th>
         <th>Result</th>
         <th>Stage 1</th>
@@ -289,51 +399,25 @@ h3 { font-size: 1rem; font-weight: 600; color: var(--white); margin-bottom: .4re
     </tbody>
   </table>
 
-  <div class="page-num">3 of {{ total_pages }}</div>
-</div>
-
-<!-- ==================== PAGE 4  PERFORMANCE SUMMARY ==================== -->
-<div class="page">
-  <div class="brand">LOCKEROOM</div>
-  <h2 style="margin-top:.6rem;">Your Performance Summary</h2>
-  <p class="subtitle">Each score factors in your age and gender for accurate benchmarking.</p>
-
-  <div class="summary-cards">
-    <div class="score-card">
-      <div class="label">Health</div>
-      <div class="score">{{ health_score }} <span>/ 10</span></div>
-      <div class="badge badge-{{ health_stage }}">Stage {{ health_stage }}</div>
-    </div>
-    <div class="score-card">
-      <div class="label">Fitness</div>
-      <div class="score">{{ fitness_score }} <span>/ 10</span></div>
-      <div class="badge badge-{{ fitness_stage }}">Stage {{ fitness_stage }}</div>
-    </div>
-    <div class="score-card">
-      <div class="label">Strength</div>
-      <div class="score">{{ strength_score }} <span>/ 10</span></div>
-      <div class="badge badge-{{ strength_stage }}">Stage {{ strength_stage }}</div>
-    </div>
+  <div class="page-footer">
+    <img src="{{ logo_b64 }}" class="logo-sm" alt="">
+    <span class="page-num">3 / {{ total_pages }}</span>
   </div>
-
-  <p class="subtitle" style="margin-top:1.5rem;">Your performance summary combines multiple tests in each category, with details on the following pages.</p>
-
-  <div class="page-num">4 of {{ total_pages }}</div>
 </div>
 
-<!-- ==================== PAGE 5  HEALTH REPORT ==================== -->
+<!-- ===== PAGE 4: HEALTH + FITNESS REPORTS ===== -->
 <div class="page">
-  <div class="brand">LOCKEROOM</div>
-  <h2 style="margin-top:.6rem;">Your Health Report</h2>
+  <img src="{{ logo_b64 }}" class="logo logo-header" alt="Lockeroom">
 
-  <div class="detail-header">
-    <div class="score-card">
+  <h2>Your <em>Health</em> Report</h2>
+  <div class="detail-row">
+    <div class="score-card" style="min-width:110px;">
       <div class="label">Health</div>
       <div class="score">{{ health_score }} <span>/ 10</span></div>
       <div class="badge badge-{{ health_stage }}">Stage {{ health_stage }}</div>
     </div>
-    <div class="detail-body" style="flex:1;">
-      <h3>Biomarkers included in your Health Score</h3>
+    <div class="detail-body">
+      <h3>Biomarkers Included</h3>
       <ul class="biomarkers">
         <li><span>1.</span> Muscle Mass</li>
         <li><span>2.</span> Body Fat</li>
@@ -343,72 +427,47 @@ h3 { font-size: 1rem; font-weight: 600; color: var(--white); margin-bottom: .4re
       </ul>
     </div>
   </div>
-
-  <h3 style="margin-top:1.2rem;">Body Composition Snapshot</h3>
-  <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-top:.8rem;">
-    <div class="score-card">
-      <div class="label">Body Fat %</div>
-      <div class="score">{{ body_fat }}<span>%</span></div>
-    </div>
-    <div class="score-card">
-      <div class="label">InBody Points</div>
-      <div class="score">{{ inbody_points }}</div>
-    </div>
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:12px;">
+    <div class="score-card"><div class="label">Body Fat %</div><div class="score">{{ body_fat }}<span>%</span></div></div>
+    <div class="score-card"><div class="label">InBody Points</div><div class="score">{{ inbody_points }}</div></div>
   </div>
 
-  <div class="page-num">5 of {{ total_pages }}</div>
-</div>
+  <hr class="divider" style="margin-top:20px;">
 
-<!-- ==================== PAGE 6  FITNESS REPORT ==================== -->
-<div class="page">
-  <div class="brand">LOCKEROOM</div>
-  <h2 style="margin-top:.6rem;">Your Fitness Report</h2>
-  <p class="subtitle">Category: {{ category }}</p>
-
-  <div class="detail-header" style="margin-top:1rem;">
-    <div class="score-card">
+  <h2>Your <em>Fitness</em> Report</h2>
+  <p class="subtitle" style="margin-bottom:10px;">Category: {{ category }}</p>
+  <div class="detail-row">
+    <div class="score-card" style="min-width:110px;">
       <div class="label">Fitness</div>
       <div class="score">{{ fitness_score }} <span>/ 10</span></div>
       <div class="badge badge-{{ fitness_stage }}">Stage {{ fitness_stage }}</div>
     </div>
-    <div class="detail-body" style="flex:1;">
+    <div class="detail-body">
       <h3>VO2 Max</h3>
-      <p>Your current VO2 Max is <strong>{{ vo2_max }} ml/kg/min</strong>. This means your body can use {{ vo2_max }} millilitres of oxygen per kilogram of body weight per minute during intense exercise. The higher the better!</p>
+      <p>Your current VO2 Max is <strong>{{ vo2_max }} ml/kg/min</strong>. Your body can use {{ vo2_max }} millilitres of oxygen per kilogram of body weight per minute during intense exercise.</p>
       <p>VO2 is the gold standard for fitness and a key marker of lifespan.</p>
     </div>
   </div>
 
-  <h3 style="margin-top:1.5rem;">VO2 Max Scale</h3>
-  <div class="vo2-scale" style="margin-top:.8rem;">
-    <div class="vo2-seg seg1 {% if vo2_stage == 1 %}highlighted{% endif %}">
-      Stage 1<span class="seg-label">{{ vo2_ranges.s1 }}</span>
-    </div>
-    <div class="vo2-seg seg2 {% if vo2_stage == 2 %}highlighted{% endif %}" style="position:relative;">
-      Stage 2<span class="seg-label">{{ vo2_ranges.s2 }}</span>
-      {% if vo2_stage == 2 %}<div class="vo2-marker" style="left:40%;">▼ {{ vo2_max }}</div>{% endif %}
-    </div>
-    <div class="vo2-seg seg3 {% if vo2_stage == 3 %}highlighted{% endif %}">
-      Stage 3<span class="seg-label">{{ vo2_ranges.s3 }}</span>
-    </div>
-    <div class="vo2-seg seg4 {% if vo2_stage == 4 %}highlighted{% endif %}">
-      Stage 4<span class="seg-label">{{ vo2_ranges.s4 }}</span>
-    </div>
+  <div class="vo2-scale">
+    <div class="vo2-seg seg1 {% if vo2_stage == 1 %}highlighted{% endif %}">Stage 1<span class="seg-label">{{ vo2_ranges.s1 }}</span></div>
+    <div class="vo2-seg seg2 {% if vo2_stage == 2 %}highlighted{% endif %}">Stage 2<span class="seg-label">{{ vo2_ranges.s2 }}</span></div>
+    <div class="vo2-seg seg3 {% if vo2_stage == 3 %}highlighted{% endif %}">Stage 3<span class="seg-label">{{ vo2_ranges.s3 }}</span></div>
+    <div class="vo2-seg seg4 {% if vo2_stage == 4 %}highlighted{% endif %}">Stage 4<span class="seg-label">{{ vo2_ranges.s4 }}</span></div>
   </div>
 
-  <div class="score-card" style="margin-top:1.2rem; max-width:200px;">
-    <div class="label">Your VO2 Score</div>
-    <div class="score">{{ vo2_max }}</div>
-    <div class="badge badge-{{ vo2_stage }}">Stage {{ vo2_stage }}</div>
+  <div class="page-footer">
+    <img src="{{ logo_b64 }}" class="logo-sm" alt="">
+    <span class="page-num">4 / {{ total_pages }}</span>
   </div>
-
-  <div class="page-num">6 of {{ total_pages }}</div>
 </div>
 
-<!-- ==================== PAGE 7  STRENGTH REPORT ==================== -->
+<!-- ===== PAGE 5: STRENGTH + BONUS METRICS ===== -->
 <div class="page">
-  <div class="brand">LOCKEROOM</div>
-  <h2 style="margin-top:.6rem;">Your Strength Report</h2>
-  <p class="subtitle">Overall strength score is the combined result of your vertical jump, push up, and chin hold tests.</p>
+  <img src="{{ logo_b64 }}" class="logo logo-header" alt="Lockeroom">
+
+  <h2>Your <em>Strength</em> Report</h2>
+  <p class="subtitle" style="margin-bottom:10px;">Overall strength is the combined result of your vertical jump, push up, and chin hold tests.</p>
 
   <div class="str-equation">
     <div class="score-card">
@@ -428,24 +487,18 @@ h3 { font-size: 1rem; font-weight: 600; color: var(--white); margin-bottom: .4re
       <div class="score">{{ chin_hold_score }} <span>/ 10</span></div>
       <div class="badge badge-{{ chin_hold_stage }}">Stage {{ chin_hold_stage }}</div>
     </div>
-  </div>
-
-  <div style="display:flex; justify-content:center; margin-top:1rem;">
-    <div class="score-card" style="min-width:200px;">
+    <div class="op">=</div>
+    <div class="score-card" style="min-width:120px;">
       <div class="label">Overall Strength</div>
       <div class="score">{{ strength_score }} <span>/ 10</span></div>
       <div class="badge badge-{{ strength_stage }}">Stage {{ strength_stage }}</div>
     </div>
   </div>
 
-  <div class="page-num">7 of {{ total_pages }}</div>
-</div>
+  <hr class="divider" style="margin-top:18px;">
 
-<!-- ==================== PAGE 8  BONUS LONGEVITY METRICS ==================== -->
-<div class="page">
-  <div class="brand">LOCKEROOM</div>
-  <h2 style="margin-top:.6rem;">Your Bonus Longevity Metrics</h2>
-  <p class="subtitle">These bonus metrics measure power and agility: key traits for injury prevention, athleticism, and longevity.</p>
+  <h2>Bonus <em>Longevity</em> Metrics</h2>
+  <p class="subtitle" style="margin-bottom:10px;">Power and agility: key traits for injury prevention, athleticism, and longevity.</p>
 
   <div class="bonus-cards">
     <div class="score-card">
@@ -459,62 +512,64 @@ h3 { font-size: 1rem; font-weight: 600; color: var(--white); margin-bottom: .4re
     </div>
   </div>
 
-  <div class="detail-body" style="margin-top:1.5rem;">
-    <p>RSI measures how quickly and explosively you can jump and land. A higher score means more reactive power, which is vital for injury prevention and athletic performance.</p>
-  </div>
+  <p class="subtitle" style="margin-top:12px;">RSI measures how quickly and explosively you can jump and land. A higher score means more reactive power, vital for injury prevention and athletic performance.</p>
 
-  <div class="page-num">8 of {{ total_pages }}</div>
+  <div class="page-footer">
+    <img src="{{ logo_b64 }}" class="logo-sm" alt="">
+    <span class="page-num">5 / {{ total_pages }}</span>
+  </div>
 </div>
 
-<!-- ==================== PAGE 9  WHY TESTING MATTERS ==================== -->
+<!-- ===== PAGE 6: WHY TESTING MATTERS + CONGRATULATIONS ===== -->
 <div class="page">
-  <div class="brand">LOCKEROOM</div>
-  <h2 style="margin-top:.6rem;">Why Lockeroom Testing Matters<br>For Your Longevity</h2>
-  <p class="subtitle">Our Physicals give you real data to guide your training program and look at proven paths for longevity.</p>
+  <img src="{{ logo_b64 }}" class="logo logo-header" alt="Lockeroom">
 
-  <div class="why-grid" style="margin-top:1.5rem;">
+  <h2>Why Lockeroom Testing <em>Matters</em></h2>
+  <p class="subtitle">Our Physicals give you real data to guide your training and proven paths for longevity.</p>
+
+  <div class="why-grid">
     <div class="why-card">
-      <h3>VO2 Max: The #1 Predictor of Longevity</h3>
+      <h3>VO2 Max: #1 Predictor of Longevity</h3>
       <p>Measures how efficiently your heart, lungs, and muscles use oxygen.</p>
       <p><strong>Why it matters:</strong> Higher VO2 Max means longer life and lower disease risk.</p>
-      <p><strong>Research:</strong> 4–5× lower risk of death with higher VO2 (JAMA Cardiology, 2018).</p>
-      <p><strong>Real-world:</strong> Walk further without stopping, recover faster between efforts, and keep pace on family bike rides.</p>
+      <p><strong>Research:</strong> 4&ndash;5&times; lower risk of death with higher VO2 (JAMA Cardiology, 2018).</p>
+      <p><strong>Real-world:</strong> Walk further without stopping, recover faster, keep pace on family bike rides.</p>
     </div>
     <div class="why-card">
       <h3>Strength: Your Lifelong Insurance Policy</h3>
       <p>Your ability to move, lift weight and control your body.</p>
-      <p><strong>Why it matters:</strong> Strength protects your independence, movement quality, and bone density.</p>
+      <p><strong>Why it matters:</strong> Strength protects independence, movement quality, and bone density.</p>
       <p><strong>Research:</strong> Stronger people live longer (Saeterbakken et al., 2022).</p>
-      <p><strong>Real-world:</strong> Carry the groceries in one trip, lift your kids with ease, and be the one helping move the couch.</p>
+      <p><strong>Real-world:</strong> Carry the groceries in one trip, lift your kids with ease.</p>
     </div>
     <div class="why-card">
-      <h3>Power: Your Reaction and Safety Buffer</h3>
+      <h3>Power: Your Reaction &amp; Safety Buffer</h3>
       <p>Your ability to move fast and react quickly.</p>
       <p><strong>Why it matters:</strong> Power helps prevent falls and injuries.</p>
       <p><strong>Research:</strong> Leg power predicts falls better than strength (Skelton et al., 2002).</p>
-      <p><strong>Real-world:</strong> Step off a curb quickly, catch yourself before falling, and sprint to make your flight.</p>
+      <p><strong>Real-world:</strong> Step off a curb quickly, catch yourself before falling, sprint for your flight.</p>
     </div>
   </div>
 
-  <p class="subtitle" style="margin-top:1.2rem;">The Bottom Line: We test what matters so you can live a longer, stronger life.</p>
+  <p class="subtitle" style="margin-top:12px; font-style:italic;">The Bottom Line: We test what matters so you can live a longer, stronger life.</p>
 
-  <div class="page-num">9 of {{ total_pages }}</div>
-</div>
+  <hr class="divider" style="margin-top:22px;">
 
-<!-- ==================== PAGE 10  CONGRATULATIONS ==================== -->
-<div class="page congrats">
-  <div class="brand brand-lg" style="margin-bottom:2rem;">LOCKEROOM</div>
-  <h1>Congratulations on completing your Physical&trade;</h1>
-  <p>At Lockeroom, we don't guess. We test.<br>Let's get to work improving before your next Physical.</p>
-  <p>Your results manager will read through your report. And you can work together on strategies to improve the areas that are most important to you.</p>
-  <div class="page-num">10 of {{ total_pages }}</div>
-</div>
+  <div style="text-align:center; padding:16px 0;">
+    <h2 style="font-size:1.5rem; margin-bottom:10px;">Congratulations on completing your <em>Physical</em>&trade;</h2>
+    <p style="font-family:var(--font-body); color:var(--text-secondary); font-size:.72rem; line-height:1.65; max-width:80%; margin:0 auto;">
+      At Lockeroom, we don't guess. We test.
+      Let's get to work improving before your next Physical.
+      Your results manager will read through your report, and you can work together on
+      strategies to improve the areas that are most important to you.
+    </p>
+    <img src="{{ logo_b64 }}" style="height:20px; margin-top:18px; opacity:.4;" alt="">
+  </div>
 
-<!-- ==================== PAGE 11  BACK COVER ==================== -->
-<div class="page back-cover">
-  <div class="brand brand-lg">LOCKEROOM</div>
-  <p style="color:var(--g300); margin-top:.8rem; font-size:.8rem;">Your Physical&trade; Report &mdash; {{ name }}</p>
-  <div class="page-num">11 of {{ total_pages }}</div>
+  <div class="page-footer">
+    <img src="{{ logo_b64 }}" class="logo-sm" alt="">
+    <span class="page-num">6 / {{ total_pages }}</span>
+  </div>
 </div>
 
 </body>
