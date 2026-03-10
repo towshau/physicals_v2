@@ -125,7 +125,7 @@ def render_html(data: dict) -> str:
 async def _html_to_pdf_bytes(html: str) -> bytes:
     """Render HTML to PDF and return raw bytes (no file written)."""
     async with async_playwright() as p:
-        browser = await p.chromium.launch()
+        browser = await p.chromium.launch(args=["--no-sandbox", "--disable-setuid-sandbox"])
         page = await browser.new_page(
             viewport={"width": 1123, "height": 794},
             device_scale_factor=2,
@@ -141,8 +141,8 @@ async def _html_to_pdf_bytes(html: str) -> bytes:
     return pdf_bytes
 
 
-def generate_pdf_bytes(data: dict) -> bytes:
-    """Accept a report-payload dict, inject assets, and return PDF bytes."""
+async def async_generate_pdf_bytes(data: dict) -> bytes:
+    """Async version: accept a report-payload dict, inject assets, and return PDF bytes."""
     data.setdefault("logo_b64", _b64_img("logo.png"))
     data.setdefault("hero_b64", _b64_img("hero.png"))
     data.setdefault("total_pages", 3)
@@ -157,7 +157,12 @@ def generate_pdf_bytes(data: dict) -> bytes:
          "description": "You've done the work, now it's about exploring your potential. This stage is for sharpening performance and pushing personal bests."},
     ])
     html = render_html(data)
-    return asyncio.run(_html_to_pdf_bytes(html))
+    return await _html_to_pdf_bytes(html)
+
+
+def generate_pdf_bytes(data: dict) -> bytes:
+    """Sync wrapper for CLI use (not safe inside an already-running event loop)."""
+    return asyncio.run(async_generate_pdf_bytes(data))
 
 
 def generate_pdf(filename: str | None = None) -> None:
