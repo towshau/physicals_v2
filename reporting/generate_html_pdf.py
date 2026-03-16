@@ -32,10 +32,9 @@ def get_dummy_data() -> dict:
         "date": "03. 03. 2026",
         "report_date": today,
         "category": "Female, Ages 40 & Under",
-        "total_pages": 3,
+        "total_pages": 2,
 
         "logo_b64": _b64_img("logo.png"),
-        "hero_b64": _b64_img("hero.png"),
 
         "stages": [
             {"num": 1, "name": "Reset", "range": "0/10 – 5.9/10",
@@ -144,8 +143,7 @@ async def _html_to_pdf_bytes(html: str) -> bytes:
 def generate_pdf_bytes(data: dict) -> bytes:
     """Accept a report-payload dict, inject assets, and return PDF bytes."""
     data.setdefault("logo_b64", _b64_img("logo.png"))
-    data.setdefault("hero_b64", _b64_img("hero.png"))
-    data.setdefault("total_pages", 3)
+    data.setdefault("total_pages", 2)
     data.setdefault("stages", [
         {"num": 1, "name": "Reset", "range": "0/10 – 5.9/10",
          "description": "This is your starting point, all uphill from here. Now we get to work, focusing on helping you feel better, move better, and build momentum."},

@@ -15,8 +15,8 @@
   --card: #262626;
   --divider-dark: #333333;
   --divider-light: #E0E0E0;
-  --text-secondary: #999999;
-  --text-tertiary: #666666;
+  --text-secondary: #CCCCCC;
+  --text-tertiary: #999999;
 
   --s1: #6B1414;
   --s2: #9E631D;
@@ -88,7 +88,7 @@ h3 {
   color: var(--white); margin-bottom: .3rem;
 }
 .subtitle {
-  font-family: var(--font-body); color: var(--text-secondary); font-size: .85rem;
+  font-family: var(--font-body); color: var(--text-secondary); font-size: .95rem;
   line-height: 1.5; margin-top: .2rem;
 }
 .data-text { font-family: var(--font-data); }
@@ -158,7 +158,7 @@ h3 {
   color: var(--white); margin-bottom: 4px;
 }
 .stage-card .stage-desc {
-  font-family: var(--font-body); font-size: .7rem; color: var(--text-secondary);
+  font-family: var(--font-body); font-size: .8rem; color: var(--text-secondary);
   line-height: 1.5; flex: 1;
 }
 .stage-card .stage-range { margin-top: 8px; }
@@ -183,7 +183,7 @@ h3 {
 }
 .results-table {
   width: 100%; border-collapse: collapse;
-  font-family: var(--font-data); font-size: .7rem;
+  font-family: var(--font-data); font-size: .8rem;
 }
 .results-table th, .results-table td {
   padding: 6px 8px; border: 1px solid var(--divider-dark); vertical-align: middle;
@@ -196,18 +196,22 @@ h3 {
 }
 .results-table .result-date { font-weight: 400; font-size: .65rem; color: var(--text-tertiary); }
 .results-table .test-name { color: var(--white); font-weight: 500; white-space: nowrap; }
-.results-table .result-cell { text-align: center; font-weight: 700; color: var(--white); font-size: .75rem; }
+.results-table .result-cell { text-align: center; font-weight: 700; color: var(--white); font-size: .85rem; }
 .results-table .result-cell .result-date {
-  display: block; font-weight: 400; font-size: .6rem; color: var(--text-tertiary); margin-bottom: 2px;
+  display: block; font-weight: 400; font-size: .7rem; color: var(--text-tertiary); margin-bottom: 2px;
 }
 .results-table .stage-cell {
-  text-align: center; color: var(--text-tertiary); font-size: .6rem;
+  text-align: center; color: var(--text-tertiary); font-size: .7rem;
   line-height: 1.4; white-space: pre-line;
 }
 .results-table .stage-cell.active-1 { background: var(--s1bg); color: var(--s1); font-weight: 600; }
 .results-table .stage-cell.active-2 { background: var(--s2bg); color: var(--s2); font-weight: 600; }
 .results-table .stage-cell.active-3 { background: var(--s3bg); color: var(--s3); font-weight: 600; }
 .results-table .stage-cell.active-4 { background: var(--s4bg); color: var(--s4); font-weight: 600; }
+.results-table .result-cell.result-stage-1 { background: var(--s1bg); }
+.results-table .result-cell.result-stage-2 { background: var(--s2bg); }
+.results-table .result-cell.result-stage-3 { background: var(--s3bg); }
+.results-table .result-cell.result-stage-4 { background: var(--s4bg); }
 .results-table .pillar-cell {
   background: var(--card); color: var(--s2); font-weight: 700;
   text-align: center; writing-mode: vertical-rl; text-orientation: mixed;
@@ -267,7 +271,7 @@ h3 {
 .why-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 16px; }
 .why-card { background: var(--card); border-radius: var(--radius); padding: 14px; }
 .why-card h3 { font-family: var(--font-data); font-size: .8rem; color: var(--s2); margin-bottom: 6px; }
-.why-card p { font-family: var(--font-body); font-size: .7rem; color: var(--text-secondary); line-height: 1.55; margin-bottom: 4px; }
+.why-card p { font-family: var(--font-body); font-size: .8rem; color: var(--text-secondary); line-height: 1.55; margin-bottom: 4px; }
 .why-card strong { color: var(--white); }
 
 /* Congrats */
@@ -289,19 +293,64 @@ h3 {
 </head>
 <body>
 
-<!-- ===== PAGE 1: COVER ===== -->
-<div class="page cover">
-  <img src="{{ hero_b64 }}" class="cover-hero" alt="">
-  <div class="cover-overlay">
-    <h1>Your Physical&trade; <em>Report</em></h1>
-    <div class="cover-bottom">
-      <img src="{{ logo_b64 }}" class="logo-cover" alt="Lockeroom">
-      <span class="client-line">{{ name }} &mdash; {{ report_date }}</span>
-    </div>
+<!-- ===== PAGE 1: PHYSICAL RESULTS TABLE ===== -->
+<div class="page">
+  <img src="{{ logo_b64 }}" class="logo logo-header" alt="Lockeroom">
+  <h2>Physical <em>Results</em></h2>
+  <div class="results-meta">RM: {{ assessor }} &nbsp;&bull;&nbsp; Category: {{ category }}</div>
+  <p class="subtitle" style="margin-bottom:10px;">First, second most recent, and most recent results for each test.</p>
+
+  <table class="results-table">
+    <thead>
+      <tr>
+        <th style="width:18px;"></th>
+        <th style="text-align:left;">Test</th>
+        <th>First result</th>
+        <th>Second most recent</th>
+        <th>Most recent</th>
+        <th>Stage 1</th>
+        <th>Stage 2</th>
+        <th>Stage 3</th>
+        <th>Stage 4</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for group in result_groups %}
+      {% for test in group.tests %}
+      <tr>
+        {% if loop.first %}
+        <td class="pillar-cell" rowspan="{{ group.tests | length }}">{{ group.pillar }}</td>
+        {% endif %}
+        <td class="test-name">{{ test.name }}</td>
+        <td class="result-cell">
+          <span class="result-date">{{ test.first_date }}</span>
+          {{ test.first_value }}
+        </td>
+        <td class="result-cell">
+          <span class="result-date">{{ test.second_date }}</span>
+          {{ test.second_value }}
+        </td>
+        <td class="result-cell{% if test.most_recent_stage %} result-stage-{{ test.most_recent_stage }}{% endif %}">
+          <span class="result-date">{{ test.most_recent_date }}</span>
+          {{ test.most_recent_value }}
+        </td>
+        <td class="stage-cell {% if test.first_stage == 1 or test.second_stage == 1 or test.most_recent_stage == 1 %}active-1{% endif %}">{{ test.s1 }}</td>
+        <td class="stage-cell {% if test.first_stage == 2 or test.second_stage == 2 or test.most_recent_stage == 2 %}active-2{% endif %}">{{ test.s2 }}</td>
+        <td class="stage-cell {% if test.first_stage == 3 or test.second_stage == 3 or test.most_recent_stage == 3 %}active-3{% endif %}">{{ test.s3 }}</td>
+        <td class="stage-cell {% if test.first_stage == 4 or test.second_stage == 4 or test.most_recent_stage == 4 %}active-4{% endif %}">{{ test.s4 }}</td>
+      </tr>
+      {% endfor %}
+    {% endfor %}
+    </tbody>
+  </table>
+
+  <div class="page-footer">
+    <img src="{{ logo_b64 }}" class="logo-sm" alt="">
+    <span class="page-num">1 / {{ total_pages }}</span>
   </div>
 </div>
 
-<!-- ===== PAGE 2: JOURNEY + PERFORMANCE SUMMARY ===== -->
+<!-- ===== PAGE 2: JOURNEY + WHY TESTING MATTERS ===== -->
 <div class="page">
   <img src="{{ logo_b64 }}" class="logo logo-header" alt="Lockeroom">
   <h2>Your Lockeroom <em>Journey</em></h2>
@@ -358,63 +407,6 @@ h3 {
   <div class="page-footer">
     <img src="{{ logo_b64 }}" class="logo-sm" alt="">
     <span class="page-num">2 / {{ total_pages }}</span>
-  </div>
-</div>
-
-<!-- ===== PAGE 3: PHYSICAL RESULTS TABLE ===== -->
-<div class="page">
-  <img src="{{ logo_b64 }}" class="logo logo-header" alt="Lockeroom">
-  <h2>Physical <em>Results</em></h2>
-  <div class="results-meta">RM: {{ assessor }} &nbsp;&bull;&nbsp; Category: {{ category }}</div>
-  <p class="subtitle" style="margin-bottom:10px;">First, second most recent, and most recent results for each test.</p>
-
-  <table class="results-table">
-    <thead>
-      <tr>
-        <th style="width:18px;"></th>
-        <th style="text-align:left;">Test</th>
-        <th>First result</th>
-        <th>Second most recent</th>
-        <th>Most recent</th>
-        <th>Stage 1</th>
-        <th>Stage 2</th>
-        <th>Stage 3</th>
-        <th>Stage 4</th>
-      </tr>
-    </thead>
-    <tbody>
-    {% for group in result_groups %}
-      {% for test in group.tests %}
-      <tr>
-        {% if loop.first %}
-        <td class="pillar-cell" rowspan="{{ group.tests | length }}">{{ group.pillar }}</td>
-        {% endif %}
-        <td class="test-name">{{ test.name }}</td>
-        <td class="result-cell">
-          <span class="result-date">{{ test.first_date }}</span>
-          {{ test.first_value }}
-        </td>
-        <td class="result-cell">
-          <span class="result-date">{{ test.second_date }}</span>
-          {{ test.second_value }}
-        </td>
-        <td class="result-cell">
-          <span class="result-date">{{ test.most_recent_date }}</span>
-          {{ test.most_recent_value }}
-        </td>
-        <td class="stage-cell {% if test.first_stage == 1 or test.second_stage == 1 or test.most_recent_stage == 1 %}active-1{% endif %}">{{ test.s1 }}</td>
-        <td class="stage-cell {% if test.first_stage == 2 or test.second_stage == 2 or test.most_recent_stage == 2 %}active-2{% endif %}">{{ test.s2 }}</td>
-        <td class="stage-cell {% if test.first_stage == 3 or test.second_stage == 3 or test.most_recent_stage == 3 %}active-3{% endif %}">{{ test.s3 }}</td>
-        <td class="stage-cell {% if test.first_stage == 4 or test.second_stage == 4 or test.most_recent_stage == 4 %}active-4{% endif %}">{{ test.s4 }}</td>
-      </tr>
-      {% endfor %}
-    {% endfor %}
-    </tbody>
-  </table>
-
-  <div class="page-footer">
-    <img src="{{ logo_b64 }}" class="logo-sm" alt="">
-    <span class="page-num">3 / {{ total_pages }}</span>
   </div>
 </div>
 
